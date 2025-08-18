@@ -103,4 +103,58 @@ tbl_uvregression(
 	nlsy,
 	x = sex_cat,
 	include = c(nsibs, sleep_wkdy, sleep_wknd, income),
-	method = lm)
+	method = lm,
+	#intercept = TRUE,
+	label = list(
+		nsibs ~ "Number of sibilings",
+		sleep_wkdy ~ "Hours of sleep during week",
+		sleep_wknd ~ "Hours of sleep on weekend",
+		income ~ "Annual income"))
+
+
+#number 4
+poisson_model <- glm(nsibs ~ income + race_eth_cat + region_cat,
+											data = nlsy, family = poisson())
+
+tbl_regression(
+	poisson_model,
+	exponentiate = TRUE,
+	label = list(
+		income ~ "Annual income",
+		race_eth_cat ~ "Race/ethnicity",
+		region_cat ~ "Region"
+	))
+
+
+#number 5
+binomial_glasses_model <- glm(glasses ~ eyesight_cat + sex_cat,
+										 data = nlsy, family = binomial(link = "log"))
+
+binomial <- tbl_regression(
+	binomial_glasses_model,
+	exponentiate = TRUE,
+	label = list(
+		eyesight_cat ~ "Eyesight",
+		sex_cat ~ "Sex"
+	))
+
+
+#number 6
+library(sandwich)
+poisson_glasses_model <- glm(glasses ~ eyesight_cat + sex_cat,
+															data = nlsy, family = poisson(link = "log"))
+
+poisson <- tbl_regression(
+	poisson_glasses_model,
+	exponentiate = TRUE,
+	label = list(
+		eyesight_cat ~ "Eyesight",
+		sex_cat ~ "Sex"
+	),
+	tidy_fun = partial(tidy_robust, vcov = "HC1"))
+
+
+
+#number 7
+tbl_merge(list(binomial, poisson),
+					tab_spanner = c("**Log-Binomial**", "**Poisson**"))
