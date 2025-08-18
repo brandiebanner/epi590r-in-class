@@ -67,12 +67,10 @@ tbl_summary(
 							 income ~ "Annual income",
 							 sleep_wkdy ~ "Hours of sleep during week",
 							 sleep_wknd ~ "Hours of sleep during weekend"),
-	statistic = list(income ~ "10% = {p10}; 90% = {p90}",
-									 sleep_wkdy ~ "min = {min}; max = {max}",
-									 sleep_wknd ~ "min = {min}; max = {max}"),
+	statistic = list(income ~ "{p10} to {p90}",
+									 starts_with("sleep") ~ "min = {min}; max = {max}"),
 	digits = list(income ~ 3,
-								sleep_wkdy ~ 1,
-								sleep_wknd ~ 1),
+								starts_with("sleep") ~ 1),
 	missing_text = "Missing") |>
 	add_p(test = list(all_continuous() ~ "t.test",
 										all_categorical() ~ "chisq.test"))|>
