@@ -57,6 +57,8 @@ tbl_summary(
 	modify_footnote(update = everything() ~ NA) |>
 	modify_header(label = "**Variable**", p.value = "**P**")
 
+
+
 #my code
 tbl_summary(
 	nlsy,
