@@ -71,12 +71,12 @@ tbl_summary(
 									 sleep_wkdy ~ "min = {min}; max = {max}",
 									 sleep_wknd ~ "min = {min}; max = {max}"),
 	digits = list(income ~ 3,
-								sleep_wkdy ~ 0,
-								sleep_wknd ~ 0),
+								sleep_wkdy ~ 1,
+								sleep_wknd ~ 1),
 	missing_text = "Missing") |>
 	add_p(test = list(all_continuous() ~ "t.test",
 										all_categorical() ~ "chisq.test"))|>
-	add_overall(col_label = "**Total**")
-
-	#modify_footnote_header("Please see: https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data for more information on how NLSY classified participants", columns = race_eth_cat)
-	#modify_footnote(update = race_eth_cat ~ "Please see: https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data for more information on how NLSY classified participants")
+	add_overall(col_label = "**Total**") |>
+	modify_table_styling(columns =label,
+											 rows = label == "Race/ethnicity",
+											 footnote = "Please see: https://www.nlsinfo.org/content/cohorts/nlsy79/topical-guide/household/race-ethnicity-immigration-data for more information on how NLSY classified participants")
