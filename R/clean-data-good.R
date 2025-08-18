@@ -34,3 +34,4 @@ if (!dir.exists(here::here("data", "clean"))) {
 
 # save the complete-case data
 write_rds(nlsy_cc, here::here("data", "clean", "nlsy-complete-cases.rds"))
+
