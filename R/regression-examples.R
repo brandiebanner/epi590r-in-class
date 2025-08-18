@@ -158,3 +158,22 @@ poisson <- tbl_regression(
 #number 7
 tbl_merge(list(binomial, poisson),
 					tab_spanner = c("**Log-Binomial**", "**Poisson**"))
+
+
+
+#exploration
+library(flextable)
+set_flextable_defaults(
+	font.size = 10, theme_fun = theme_vanilla,
+	padding = 6,
+	background.color = "#EFEFEF")
+ft <- flextable(nlsy[ sample.int(10),])
+ft <- add_header_row(ft,
+										 colwidths = c(2, 2, 13, 2),
+										 values = c("Eyes", "Sleep", "Demographics", "Eyes Categorical")
+)
+ft <- theme_vanilla(ft)
+ft <- add_footer_lines(ft, "This is practice.")
+ft <- color(ft, part = "footer", color = "#666666")
+ft <- set_caption(ft, caption = "NLSY Table")
+ft
