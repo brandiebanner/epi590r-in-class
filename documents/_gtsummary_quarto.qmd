@@ -105,10 +105,17 @@ The age of first birth overall was `r overallagebirth` (@tbl-descr).
 #| output-location: slide
 tablesleep <- tbl_summary(
   nlsy,
-  include = sleep_wknd) 
+  by = sex_cat,
+  include = c(sleep_wknd, eyesight_cat),
+  ) |> 
+  add_overall(last = TRUE)
 tablesleep
 
 mediansleep <-inline_text(tablesleep, variable = "sleep_wknd", column = "stat_0")
+
+excellent_eyesight <-inline_text(tablesleep, variable = "eyesight_cat", level = "Excellent", column = "stat_0")
 ```
 
 The overall median sleep (IQR) on the weekends was `r mediansleep` (@tbl-sleep).
+
+The people with excellent eyesight was `r excellent_eyesight` (@tbl-sleep).
